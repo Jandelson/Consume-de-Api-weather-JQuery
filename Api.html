@@ -1,0 +1,26 @@
+<script type="text/javascript" language="javascript" src="js/jquery-1.11.3.min.js" charset="utf-8"></script>
+	<script>
+		function atualiza() {
+			var cid = $('#cidade').val();
+			$.ajax({
+			  url: "http://api.openweathermap.org/data/2.5/weather",
+			  data: {
+			    q: cid
+			  },
+			  success: function( data ) {
+			  	 console.log(data);
+			  	 //alert(JSON.stringify(data));
+			    var obj = JSON.stringify(data); //Conversão para string json
+			    var obj2 = jQuery.parseJSON(obj); //Recebendo o Json e retornando resultados
+			    //alert(obj2.weather[0].description);
+			    $( "#weather-temp" ).html( "<strong> Cidade: " +obj2.name+ " - Tempo Agora: " + obj2.weather[0].description+ "</strong>");
+			  }
+			});
+		};
+	</script>
+<html>
+	<h4>Tempo Agora: Informa a Cidade</h4>
+	<input type="text" id="cidade" name="cidade">
+	<button id="btn_call" onclick="atualiza(this);">Enviar</button>
+	<div id="weather-temp"></div>
+</html>
